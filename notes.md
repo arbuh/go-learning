@@ -2,6 +2,7 @@
 
 ## Glossary
 
+Build in package - an implicit package containing the build-in functions
 Initializer - a value we asign to a variable while declaring it
 Naked return - a return statement without argumetns, which returns named return values
 Name - everything can be declared, e.g. `var myInt int` or `func helper()`
@@ -16,7 +17,7 @@ This is how we can import other packages:
 ```
 import (
 	"fmt"
-	"math/rand" <- use `rand.*` to call items in the package
+	"math/rand" // <- use `rand.*` to call items in the package
 )
 ```
 
@@ -225,7 +226,198 @@ func processFile() error {
 
 Deferred functions are stored in a stack, i.e. the latest ones are executed the first.
 
+## Complex types
 
+### Pointers
+
+A pointer holds the memory address of a value. It has a type `*T` where `T` is the value's type:
+```
+var p *int
+```
+
+You can generate a pointer from a variable using the `&` operator:
+```
+i := 42
+p = &i
+```
+
+Then you can access or set a value using the operator `*`:
+```
+fmt.Println(p*) // <- to access the value of `i`
+*p = 21 // <- to set the value of `i`
+```
+
+### Structs
+
+A struct is a collection of fields:
+```
+type Vertex struct {
+    X int
+    Y int
+}
+```
+
+If you have a pointer to a struct, you can omit the `*` operator:
+```
+v := Vertex{1, 2}
+p := &v
+p.X = 2 // i.e. it is not necessery to write `(p*).X = 2`
+```
+
+You can also set values to individual fields in any order:
+```
+v := Vertex{Y:11} // `X` is 0 then
+```
+
+### Arrays
+
+You have to specify a size of an array on its initialization:
+```
+var a [10]int
+```
+
+You can slice an array:
+```
+var b []int = a[1:3] // i.e. including the element with the index 1 up to excluding 3
+```
+
+Since slices don't contain data and refer to an underlying array, if you modify a slice you also modify the reference array.
+
+It is not necessery to initialize an array first before initializing a slice.
+You can init a slice using the slice literal an it will create the underlying array out of the box:
+```
+a := []int{1, 2, 3, 4, 5, 6}
+```
+
+A slice had a length and a capacity. Then can be accesed via `len(a)` and `cap(a)`.
+The length is a number of elements in the slice.
+The capacity is a number of elements in the underlaying array counting from the first element in the slice.
+The capacity is important because it allows to control memory allocations.
+So the runtime doesn't need to reallocate memory if there is still sufficient capacity.
+
+You can also have nil slices, which have the zero value `nil` and the length and capacity equal to zero:
+```
+var a []int
+```
+
+You can create a slice using the `make` function:
+```
+a := make(int[], 3, 5) // len(a)=3, cap(a)=5, the allocated elements are zeros
+```
+
+To add elements to a slice, use the `append` function:
+```
+a = append(a, 1, 2) // the first argument is the target slice, and the rest is varargs with new elements
+```
+
+Be carefull, it returns a new slice, instead of modifying the provided one!
+
+### Range
+
+The function `range` allows to iterate over a slice or a map:
+```
+for i, v := range a {
+    fmt.Printf("%d:%d\n", i, v)
+}
+
+// Skipping the indexes:
+for _, v := range a {
+    fmt.Printfln(v)
+}
+
+// Skipping the values:
+for i := range a {
+    fmt.Printfln(i)
+}
+```
+
+### Map
+
+You usually use the `make` function to create a map, otherwise the map has `nil` value and you cannot add items to it:
+```
+var m map[string]int
+m = make(map[string]int)
+```
+
+Althernatively, you can use the map literals:
+```
+var m = map[string]int{
+    "a": 1,
+    "b": 2,
+}
+```
+
+Map mutations:
+```
+m[key] = elem       // <- add or replace an element
+elem = m[key]       // <- access an element
+delete(m, key)      // <- delete an element
+elem, ok = m[key]   // <- access an element and check if it is present in the map
+```
+
+### Functions
+
+You can app functions as function arguments:
+```
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+
+hypot := func(x, y float64) float64 {
+	return math.Sqrt(x*x + y*y)
+}
+
+compute(hypot)
+```
+
+A function can be also a closure:
+```
+func fibonacci() func() int {
+	prev := 0
+	curr := 0
+	return func() int {
+		sum := prev + curr
+		prev = curr
+		curr++
+		return sum
+	}
+}
+
+func main() {
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
+}
+```
+
+## Methods and interfaces
+
+### Methods
+
+You can define methods on types via a receiver argument:
+```
+type Person struct {
+    Name string
+}
+
+func (p Person) greet(other string) string {
+    return fmt.Sprintf("Hello %s, I'm %s", other, p.Name)
+}
+
+p := Person{"Alice"}
+p.greet("Bob"}
+```
+
+N.B., you can declare a method only in the same package where the type is defined!
+
+A method with a type value (as in the exemple above) gets a copy of the value.
+If you want to modify the provided value, use a pointer receiver:
+```
+func (p *Person) changeName() {
+    p.Name = "Changed"
+}
+```
 
 
 
