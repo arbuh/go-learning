@@ -162,6 +162,8 @@ for {
 }
 ```
 
+Use `break` to exit a loop.
+
 ### If
 
 
@@ -262,7 +264,7 @@ If you have a pointer to a struct, you can omit the `*` operator:
 ```
 v := Vertex{1, 2}
 p := &v
-p.X = 2 // i.e. it is not necessery to write `(p*).X = 2`
+p.X = 2 // i.e. it is not necessery to write (p*).X = 2
 ```
 
 You can also set values to individual fields in any order:
@@ -480,9 +482,38 @@ default:
 }
 ```
 
+## Build-in interfaces
 
+### Error
 
+Go has in-build interface for errors:
+```
+type error interface {
+    Error() string
+}
+```
 
+Functions often return `error` instances as a second return value.
+You can check them whether they are equal to `nil`, and do error processing if they are not.
+
+You can create your own implementation of `error` by implementing the `Error()` method for your error types.
+
+### Stringer
+
+The `Stringer` interface is heavily used by the `fmt` package:
+```
+type Stringer interface {
+    String() string
+}
+```
+
+Make your types implementing this interface to be accepted by the functions in `fmt`.
+
+### Reader
+
+For reading a stream of data, Go uses the `io.Reader` interface.
+It has a method `func (T) Read(b []byte) (n int, err error)` that populates the provided array with read bytes.
+`n` represents here the number of bytes populated, and `err` is populated with `io.EOF` when the stream ends.
 
 
 
