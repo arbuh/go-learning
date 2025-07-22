@@ -7,6 +7,7 @@ Initializer - a value we asign to a variable while declaring it
 Naked return - a return statement without argumetns, which returns named return values
 Name - everything can be declared, e.g. `var myInt int` or `func helper()`
 Named return value - values in a function that can be returned by a naked return and have names providing meaning behind the values
+Panic - an error
 
 ## Packages
 
@@ -418,6 +419,74 @@ func (p *Person) changeName() {
     p.Name = "Changed"
 }
 ```
+
+### Interfaces
+
+You don't need to expicetely declare implementations of interfaces:
+```
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+
+// By this method, the type implements the interface
+func (t T) M() {
+	fmt.Println(t.S)
+}
+```
+
+Under the hood, interface is a tuple of the value and the implementation type.
+Keeping the type allows to understand which method must be called when we call a method on the interface type.
+
+You can call a method on an interface implemented via a type with `nil` value.
+However, you cannot call a method on an interface without an implementation.
+
+Q: What happens when twoo interfaces share the same name?
+
+### Zero interface
+
+Zero interface can be of any type, because all types implement at least zero methods:
+```
+var i interface{}
+i = 42
+i = "hello"
+```
+
+It allows to implement functions that handle arguments of any type.
+
+### Type assertions
+
+You can get from an interface a concrete value as well as a flag whether it is possible:
+
+```
+t, ok = i.(T)
+```
+
+### Type switch
+
+You can also use a type switch to get concrete values from an interface.
+It has syntax similar to type assertions, but you write `type` in the parenthesis instead of the type name:
+```
+switch v := i.(type) {
+case T:
+    // here v has type T
+case S:
+    // here v has type S
+default:
+    // no match; here v has the same type as i
+}
+```
+
+
+
+
+
+
+
+
 
 
 
