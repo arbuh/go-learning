@@ -532,5 +532,104 @@ type List[T any] struct {
 
 ```
 
+If you want to implement a method for such a type, you don't need to specify the type parameter because the type already has it:
+```
+func (l *List[T]) Add(val T) *List[T] {
+	newNode := &List[T]{l, val}
+	return newNode
+}
+```
+
+## Concurrency
+
+### Goroutines
+
+A goroutine is a lightweigth thread that can be called using the keyword `go` before calling the function must be executed in the goroutine:
+```
+go f(arg1, agr2)
+```
+
+The evaluation of `f`, `arg1` and `arg2` happens in the current goroutine, while the execution of `f` in the new one
+(evaluation of `f` means that Go determines which function `f` refers to, whithout executing it).
+
+Goroutines share the same memory address space, even when they run in the same threat.
+So you must be carefull with the shared variables.
+
+### Channels
+
+Channels are an abstraction that allows to safely share values among goroutines.
+
+You must create a channel before use:
+```
+ch:= make(chan int)
+```
+
+Then you can send and recive values to/from the channel:
+```
+ch <- v // Sending a value
+v := <-ch // Receiving a value
+```
+
+#### Buffers
+
+You can also specify how many values a channel can keep before the values are consumed by goroutines:
+```
+ch := make(chan int, 2)
+```
+
+Such a channel is called "buffered".
+If a buffured channel is full and you send a value there, you get a deadlock error.
+The same happens if you try to receive a value from the channel when it is empty.
+
+If you don't specify a buffer (e.g. `ch := make(chan int)`), its size is zero.
+It means that if there is no goroutine consiming the values, you will get a deadlock error on sending a value:
+```
+ch := make(chan int)
+ch <- 1 // Here we will get a deadlock error
+```
+
+So unbuffered channels require synchronous communication!
+
+A bugger's size can be abtained using the build-in function `cap`:
+```
+cap(ch)
+```
+
+#### Closing
+
+A sender can communicate there will no more values sending to a channel using the keyword `close`.
+A receiver can check if there will be more values from the channel by checking a flag-field provided as a second parameter in the channel reading:
+```
+v, ok <- ch
+```
+
+You can read values from a channel in a loop until the channel is closed:
+```
+for v := ch range {
+    ...
+}
+```
+
+#### Select
+
+If a gorouting reads from more than one channel, you should use the `select` statement:
+```
+select {
+    case a <- ch1:
+        ...
+    case b <- ch2:
+        ...
+}
+```
+
+You can also process situations when no case is ready under the `default` case.
+
+If you don't use `select`, the gorouting will be blocked if there is no value avaliable in a channel.
+Then it will not be reading even from the channels that have values.
+
+
+
+
+
 
 
