@@ -515,9 +515,22 @@ For reading a stream of data, Go uses the `io.Reader` interface.
 It has a method `func (T) Read(b []byte) (n int, err error)` that populates the provided array with read bytes.
 `n` represents here the number of bytes populated, and `err` is populated with `io.EOF` when the stream ends.
 
+## Generics
 
+You can provide generics to a function the following way:
+```
+func Index[T comparable](s []T, x T) int
+```
 
+The keyword `comparable` means here that it is possible to use the `==` and `!=` operators on the type T.
 
+It is also possible to use generics in types:
+```
+type List[T any] struct {
+    next *List[T]
+    val  T
+
+```
 
 
 
