@@ -605,7 +605,7 @@ v, ok <- ch
 
 You can read values from a channel in a loop until the channel is closed:
 ```
-for v := ch range {
+for v := range ch {
     ...
 }
 ```
@@ -615,9 +615,9 @@ for v := ch range {
 If a gorouting reads from more than one channel, you should use the `select` statement:
 ```
 select {
-    case a <- ch1:
+    case a := <- ch1:
         ...
-    case b <- ch2:
+    case b := <- ch2:
         ...
 }
 ```
@@ -626,6 +626,21 @@ You can also process situations when no case is ready under the `default` case.
 
 If you don't use `select`, the gorouting will be blocked if there is no value avaliable in a channel.
 Then it will not be reading even from the channels that have values.
+
+#### Mutex
+
+Mutex allows mutual exclusion of value access among goroutines:
+```
+mu sync.Mutex
+```
+
+It has two methods: `Lock` and `Unlock`.
+Only a singe goroutine can access a code between `Lock` and `Unlock` (or till the end of the function if you use `defer mu.Unlock`):
+```
+mu.Lock()
+safeSharedCounter++
+mu.Unlock()
+```
 
 
 
