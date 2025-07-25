@@ -41,4 +41,18 @@ The proxy works here as a fallback in a case GitHub is down, but also to speed u
 The Go client automatically downloads a library from GitHub or the Proxy,
 depending if the library's version is alraedy cached in the Proxy.
 
+## Compilation
+
+Go requires no runtime separately installed on a machine, comparing to the JVM languages.
+A Go application is compiled directly to a native code executed on a CPU.
+
+The resulted binary contains all the components required for a stand-alone running of the application:
+* The application's code
+* Go standard library
+* Third-party libraries
+* Go runtime
+
+An important note is that Go has a garbage collector, and it is a part of the runtime which is compiled into the binary.
+
+A Go binary is compiled separately per each OS + architecture combination.
 

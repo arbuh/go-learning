@@ -3,8 +3,8 @@
 
 ## Running
 
-`go build` - compile (TODO: what does it exectly do?)
-`go run main.go` - compile and run (TODO: what does it exectly do?)
+`go build` - compile
+`go run main.go` - compile and run without creating a native binary
 `go test` - run tests
 `go fmt` - format code
 `go vet` - static analysis
