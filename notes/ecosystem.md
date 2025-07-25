@@ -1,5 +1,36 @@
 # Go ecosystem
 
+## Modules
+
+A module is a collection of packages.
+It is equal to a project in a Scala ecosystem.
+A module must have a `go.mod` file, where you specify its code repository, Go version, dependencies etc.
+
+Modules can be of the following types:
+* Executable module - has a main package
+* Library module - has no main package
+* Mixed module - has a main package but also can be published as a library
+
+### Naming
+
+Single word names are prefered, but the `kebab-case` is also common for multipe words names.
+Use descriptive but laconic names.
+Don't add the `go-` prefix.
+
+### Versioning
+
+Go modules use the server with the `v` prefix.
+For instance, `v1.2.3`.
+
+It is not necessery to specify a version of you add as a dependency a module of `v1` version.
+However, you must specify a semver prefix for the upcoming major versions, e.g. `v2`.
+
+For instance:
+```go
+import "github.com/user/myproject"     // v1.x.x
+import "github.com/user/myproject/v2"  // v2.x.x  
+```
+
 ## Libraries
 
 In Go, a library must be published on GitHub or GitLab.
