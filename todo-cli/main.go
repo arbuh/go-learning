@@ -1,10 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"todo-cli/cmd"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	cmd.Execute()
 }
-
-
 

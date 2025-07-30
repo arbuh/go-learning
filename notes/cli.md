@@ -13,4 +13,10 @@
 ## Modules
 
 `go mod init <project name>` - init a project
-`go mod tidy` - clean up dependencies (TODO: what does it exectly do?)
+
+## Dependencies
+
+`go get <package-url>` - download and add to the module a dependency
+`go get -u ./...` - update all dependencies to the latest minor or patch
+`go get -u=patch ./...` - update all dependencies to the latest patch
+`go mod tidy` - clean up dependencies

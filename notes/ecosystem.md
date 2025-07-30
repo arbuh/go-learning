@@ -39,7 +39,16 @@ It happens when somebody runs `go get` for the library.
 The proxy works here as a fallback in a case GitHub is down, but also to speed up the library's downloading.
 
 The Go client automatically downloads a library from GitHub or the Proxy,
-depending if the library's version is alraedy cached in the Proxy.
+depending if the library's version is already cached in the Proxy.
+
+## Dependencies
+
+You must avoid direct editing of `go.mod` for adding dependencies.
+Instead, you the command `go get ...`.
+It will download the dependency and will modify the `go.mod` file.
+The direct editing works on a compilation.
+But in such the case, you don't validate the dependency, Go doesn't resolve the transitive dependencies,
+and an editor can have troubles with recognizing the dependency.
 
 ## Compilation
 
