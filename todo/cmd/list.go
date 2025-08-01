@@ -3,17 +3,19 @@ package cmd
 import (
 	"fmt"
 
+	"todo/app"
+
 	"github.com/spf13/cobra"
 )
 
-var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List all tasks",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list test")
-	},
-}
+func createListCmd(appConext *app.Context) *cobra.Command {
 
-func init() {
-	rootCmd.AddCommand(listCmd)
+	cmd := &cobra.Command{
+		Use:   "list",
+		Short: "List all tasks",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("list test")
+		},
+	}
+	return cmd
 }

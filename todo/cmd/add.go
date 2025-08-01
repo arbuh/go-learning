@@ -1,19 +1,21 @@
 package cmd
 
 import (
-	"fmt"
+	"todo/app"
+	"todo/domain"
 
 	"github.com/spf13/cobra"
 )
 
-var addCmd = &cobra.Command{
-	Use:   "add",
-	Short: "Add a new task",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add test")
-	},
-}
+func createAddCmd(appConext *app.Context) *cobra.Command {
 
-func init() {
-	rootCmd.AddCommand(addCmd)
+	cmd := &cobra.Command{
+		Use:   "add",
+		Short: "Add a new task",
+		Run: func(cmd *cobra.Command, args []string) {
+			task := &domain.Task{Description: "do the things"}
+			appConext.TaskRepository.Add(task)
+		},
+	}
+	return cmd
 }
