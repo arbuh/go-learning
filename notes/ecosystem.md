@@ -50,6 +50,19 @@ The direct editing works on a compilation.
 But in such the case, you don't validate the dependency, Go doesn't resolve the transitive dependencies,
 and an editor can have troubles with recognizing the dependency.
 
+### Dependency pinning
+
+Go generates a file `go.sum` that contains a list of the application's dependencies inclusing the transitive ones.
+First of all, it provides dependency pinning to make sure only the correct dependencies are used 
+if someone else builds the application from the Git repo.
+It is mainly for the transitive dependencies because they often don't have an exact version specified in `go.mod`.
+
+Apart from the dependency pinning, `go.sum` also pins hashes for the dependencies
+to make it impossible their replacement with malicious code.
+
+N.B.: It is higly recomended NOT to exclude `go.sum` from the Git repo
+to make sure the application is built correctly and there is not malicious dependencies!
+
 ## Compilation
 
 Go requires no runtime separately installed on a machine, comparing to the JVM languages.
