@@ -64,4 +64,3 @@ The resulted binary contains all the components required for a stand-alone runni
 An important note is that Go has a garbage collector, and it is a part of the runtime which is compiled into the binary.
 
 A Go binary is compiled separately per each OS + architecture combination.
-

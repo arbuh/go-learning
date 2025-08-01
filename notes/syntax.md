@@ -31,7 +31,7 @@ You can export names from a package only if they start with a capital letter e.g
 ## Functions
 
 This is an example of a function in Go:
-```
+```go
 func add(x int, y int) int {
     return x + y
 }
@@ -69,6 +69,11 @@ func split(sum int) (x, y int) {
 }
 ```
 However, it is not very common to use them because they decrease readability.
+
+### Special functions
+
+`main()` - the entry point for an executable program that you must specify in the `main` package
+`init()` - executes automatically when a package is imported
 
 ## Variables
 
