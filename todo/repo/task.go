@@ -12,7 +12,7 @@ const fileName = "todo-data.csv"
 
 type TaskRepository interface {
 	Add(task *domain.Task)
-	// GetAll() []domain.Task
+	GetAll() []*domain.Task
 }
 
 type CsvTaskRepository struct{}
@@ -35,6 +35,31 @@ func (csvRepository CsvTaskRepository) Add(task *domain.Task) {
 	}
 
 	fmt.Printf("The task %s saved!\n", task.Description)
+}
+
+func (csvRepository CsvTaskRepository) GetAll() []*domain.Task {
+	file, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDONLY, 0644)
+
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = 1
+	data, err := reader.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+
+	var tasks []*domain.Task
+
+	for _, row := range data {
+		description := row[0]
+		task := domain.Task{Description: description}
+		tasks = append(tasks, &task)
+	}
+	return tasks
 }
 
 func NewCsvTaskRepository() TaskRepository {

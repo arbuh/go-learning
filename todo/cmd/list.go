@@ -14,7 +14,12 @@ func createListCmd(appConext *app.Context) *cobra.Command {
 		Use:   "list",
 		Short: "List all tasks",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("list test")
+			fmt.Println("Current tasks:")
+
+			tasks := appConext.TaskRepository.GetAll()
+			for i, task := range tasks {
+				fmt.Printf("%d. %s\n", i, task.Description)
+			}
 		},
 	}
 	return cmd
