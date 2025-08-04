@@ -1,3 +1,4 @@
+// Package cmd contains the command definitions
 package cmd
 
 import (

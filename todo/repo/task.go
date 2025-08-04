@@ -1,3 +1,4 @@
+// Package repo contains clients for data persistence
 package repo
 
 import (

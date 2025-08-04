@@ -1,3 +1,4 @@
+// Package app contain shared utility entities that do not represent the business logic
 package app
 
 import (
