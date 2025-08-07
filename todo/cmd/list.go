@@ -2,10 +2,15 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"todo/app"
 
 	"github.com/spf13/cobra"
+)
+
+const (
+	dateFormat = time.DateTime
 )
 
 func createListCmd(appConext *app.Context) *cobra.Command {
@@ -18,7 +23,9 @@ func createListCmd(appConext *app.Context) *cobra.Command {
 
 			tasks := appConext.TaskRepository.GetAll()
 			for i, task := range tasks {
-				fmt.Printf("%d. %s\n", i, task.Description)
+				date := task.CreatedAt.Format(dateFormat)
+
+				fmt.Printf("%d. %s, from %s\n", i, task.Description, date)
 			}
 		},
 	}
