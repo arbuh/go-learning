@@ -27,12 +27,31 @@ func createListCmd(appConext *app.Context) *cobra.Command {
 				fmt.Println("Current tasks:")
 
 				for i, task := range tasks {
-					date := task.CreatedAt.Format(dateFormat)
+					i = i + 1 // to make it more human friendly
+					duration := calcDuration(task.CreatedAt)
 
-					fmt.Printf("%d. %s, from %s\n", i, task.Description, date)
+					fmt.Printf("%d. %s, %s\n", i, task.Description, duration)
 				}
 			}
 		},
 	}
 	return cmd
+}
+
+func calcDuration(t time.Time) string {
+	duration := time.Since(t)
+
+	hours := duration.Hours()
+
+	if hours < 24 {
+		return "new"
+	}
+
+	days := int(hours / 24)
+
+	if days == 1 {
+		return "1 day ago"
+	} else {
+		return fmt.Sprintf("%d days ago", days)
+	}
 }
