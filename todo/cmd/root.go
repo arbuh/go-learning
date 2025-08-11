@@ -22,6 +22,8 @@ func createRootCmd(appContext *util.Context) *cobra.Command {
 	cmd.AddCommand(addCmd)
 	listCmd := createListCmd(appContext)
 	cmd.AddCommand(listCmd)
+	markDoneCmd := createMarkDoneCmd(appContext)
+	cmd.AddCommand(markDoneCmd)
 
 	return cmd
 }

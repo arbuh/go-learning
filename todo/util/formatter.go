@@ -12,9 +12,9 @@ func FormatTasks(tasks []*domain.Task) []string {
 	for i, task := range tasks {
 		nr := i + 1
 		duration := calcDuration(task.CreatedAt)
-		isCompleted := boolToString(task.IsCompleted)
+		isDone := boolToString(task.IsDone)
 
-		line := fmt.Sprintf("%d. %s, %s, %s", nr, task.Description, duration, isCompleted)
+		line := fmt.Sprintf("%d. %s, %s, %s", nr, task.Description, duration, isDone)
 		lines = append(lines, line)
 	}
 	return lines
