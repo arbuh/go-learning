@@ -7,10 +7,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"todo/app"
+	"todo/util"
 )
 
-func createRootCmd(appContext *app.Context) *cobra.Command {
+func createRootCmd(appContext *util.Context) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "todo",
@@ -26,7 +26,7 @@ func createRootCmd(appContext *app.Context) *cobra.Command {
 	return cmd
 }
 
-func Execute(appContext *app.Context) {
+func Execute(appContext *util.Context) {
 	rootCmd := createRootCmd(appContext)
 
 	if err := rootCmd.Execute(); err != nil {

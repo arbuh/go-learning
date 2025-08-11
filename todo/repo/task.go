@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 	"todo/domain"
+	"strconv"
 )
 
 const (
@@ -32,7 +33,7 @@ func (csvRepository CsvTaskRepository) Add(task *domain.Task) {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	row := []string{task.Description, task.CreatedAt.Format(dateFormat)}
+	row := []string{task.Description, task.CreatedAt.Format(dateFormat), strconv.FormatBool(false)}
 	err = writer.Write(row)
 	if err != nil {
 		panic(err)
@@ -50,7 +51,7 @@ func (csvRepository CsvTaskRepository) GetAll() []*domain.Task {
 	defer file.Close()
 
 	reader := csv.NewReader(file)
-	reader.FieldsPerRecord = 2
+	reader.FieldsPerRecord = 3
 	data, err := reader.ReadAll()
 	if err != nil {
 		panic(err)
@@ -64,8 +65,12 @@ func (csvRepository CsvTaskRepository) GetAll() []*domain.Task {
 		if err != nil {
 			panic(err)
 		}
+		isCompleted, err := strconv.ParseBool(row[2])
+		if err != nil {
+			panic(err)
+		}
 
-		task := domain.Task{Description: description, CreatedAt: createdAt}
+		task := domain.Task{Description: description, CreatedAt: createdAt, IsCompleted: isCompleted}
 		tasks = append(tasks, &task)
 	}
 	return tasks

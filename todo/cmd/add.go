@@ -3,13 +3,13 @@ package cmd
 import (
 	"time"
 
-	"todo/app"
+	"todo/util"
 	"todo/domain"
 
 	"github.com/spf13/cobra"
 )
 
-func createAddCmd(appConext *app.Context) *cobra.Command {
+func createAddCmd(appConext *util.Context) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "add",
