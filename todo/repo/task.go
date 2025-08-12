@@ -20,6 +20,7 @@ type TaskRepository interface {
 	Add(task *domain.Task)
 	GetAll() []*domain.Task
 	MarkDone(taskNr int) error
+	UnmarkDone(taskNr int) error
 }
 
 type CsvTaskRepository struct{}
@@ -64,6 +65,42 @@ func readAllTasks(file *os.File) []*domain.Task {
 
 func taskToString(task *domain.Task) []string {
 	return []string{task.Description, task.CreatedAt.Format(dateFormat), strconv.FormatBool(task.IsDone)}
+}
+
+func changeDoneStatus(taskNr int, isDone bool) error {
+	file := openFile()
+	defer file.Close()
+
+	tasks := readAllTasks(file)
+
+	var targetTask *domain.Task
+	for i, task := range tasks {
+		if i == taskNr-1 {
+			targetTask = task
+		}
+	}
+
+	if targetTask == nil {
+		details := fmt.Sprintf("Cannot find a task with the number %d", taskNr)
+		return errors.New(details)
+	}
+
+	targetTask.IsDone = isDone
+
+	file, err := os.Create(fileName)
+	if err != nil {
+		panic(err)
+	}
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	for _, task := range tasks {
+		row := taskToString(task)
+		writer.Write(row)
+	}
+
+	return nil
 }
 
 func (csvRepository CsvTaskRepository) Add(task *domain.Task) {
@@ -112,39 +149,11 @@ func (csvRepository CsvTaskRepository) GetAll() []*domain.Task {
 }
 
 func (csvRepository *CsvTaskRepository) MarkDone(taskNr int) error {
-	file := openFile()
-	defer file.Close()
+	return changeDoneStatus(taskNr, true)
+}
 
-	tasks := readAllTasks(file)
-
-	var targetTask *domain.Task
-	for i, task := range tasks {
-		if i == taskNr-1 {
-			targetTask = task
-		}
-	}
-
-	if targetTask == nil {
-		details := fmt.Sprintf("Cannot find a task with the number %d", taskNr)
-		return errors.New(details)
-	}
-
-	targetTask.IsDone = true
-
-	file, err := os.Create(fileName)
-	if err != nil {
-		panic(err)
-	}
-
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	for _, task := range tasks {
-		row := taskToString(task)
-		writer.Write(row)
-	}
-
-	return nil
+func (csvRepository *CsvTaskRepository) UnmarkDone(taskNr int) error {
+	return changeDoneStatus(taskNr, false)
 }
 
 func NewCsvTaskRepository() TaskRepository {
