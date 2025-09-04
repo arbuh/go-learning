@@ -1,6 +1,6 @@
 # Go learning
 
-In this repository I collect notes and exersizes to learn Go.
+In this repository I collect notes and exercises to learn Go.
 
 ## Context:
 
