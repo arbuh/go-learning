@@ -202,7 +202,7 @@ switch x {
 }
 ```
 
-An eveluation of a switch also ends when the case succeeds.
+An evaluation of a switch also ends when the case succeeds.
 
 A switch without a condition can be used a syntax-sugar over a long if-statement:
 ```
@@ -269,7 +269,7 @@ If you have a pointer to a struct, you can omit the `*` operator:
 ```
 v := Vertex{1, 2}
 p := &v
-p.X = 2 // i.e. it is not necessery to write (p*).X = 2
+p.X = 2 // i.e. it is not necessary to write (p*).X = 2
 ```
 
 You can also set values to individual fields in any order:
@@ -318,7 +318,7 @@ To add elements to a slice, use the `append` function:
 a = append(a, 1, 2) // the first argument is the target slice, and the rest is varargs with new elements
 ```
 
-Be carefull, it returns a new slice, instead of modifying the provided one!
+Be careful, it returns a new slice, instead of modifying the provided one!
 
 ### Range
 
@@ -347,7 +347,7 @@ var m map[string]int
 m = make(map[string]int)
 ```
 
-Althernatively, you can use the map literals:
+Alternatively, you can use the map literals:
 ```
 var m = map[string]int{
     "a": 1,
@@ -419,7 +419,7 @@ p.greet("Bob"}
 
 N.B., you can declare a method only in the same package where the type is defined!
 
-A method with a type value (as in the exemple above) gets a copy of the value.
+A method with a type value (as in the example above) gets a copy of the value.
 If you want to modify the provided value, use a pointer receiver:
 ```
 func (p *Person) changeName() {
@@ -429,7 +429,7 @@ func (p *Person) changeName() {
 
 ### Interfaces
 
-You don't need to expicetely declare implementations of interfaces:
+You don't need to explicitly declare implementations of interfaces:
 ```
 type I interface {
 	M()
@@ -450,8 +450,6 @@ Keeping the type allows to understand which method must be called when we call a
 
 You can call a method on an interface implemented via a type with `nil` value.
 However, you cannot call a method on an interface without an implementation.
-
-Q: What happens when twoo interfaces share the same name?
 
 ### Zero interface
 
@@ -549,16 +547,16 @@ func (l *List[T]) Add(val T) *List[T] {
 
 ### Goroutines
 
-A goroutine is a lightweigth thread that can be called using the keyword `go` before calling the function must be executed in the goroutine:
+A goroutine is a lightweight thread that can be called using the keyword `go` before calling the function must be executed in the goroutine:
 ```
 go f(arg1, agr2)
 ```
 
 The evaluation of `f`, `arg1` and `arg2` happens in the current goroutine, while the execution of `f` in the new one
-(evaluation of `f` means that Go determines which function `f` refers to, whithout executing it).
+(evaluation of `f` means that Go determines which function `f` refers to, without executing it).
 
 Goroutines share the same memory address space, even when they run in the same threat.
-So you must be carefull with the shared variables.
+So you must be careful with the shared variables.
 
 ### Channels
 
@@ -569,7 +567,7 @@ You must create a channel before use:
 ch:= make(chan int)
 ```
 
-Then you can send and recive values to/from the channel:
+Then you can send and receive values to/from the channel:
 ```
 ch <- v // Sending a value
 v := <-ch // Receiving a value
@@ -583,11 +581,11 @@ ch := make(chan int, 2)
 ```
 
 Such a channel is called "buffered".
-If a buffured channel is full and you send a value there, you get a deadlock error.
+If a buffered channel is full and you send a value there, you get a deadlock error.
 The same happens if you try to receive a value from the channel when it is empty.
 
 If you don't specify a buffer (e.g. `ch := make(chan int)`), its size is zero.
-It means that if there is no goroutine consiming the values, you will get a deadlock error on sending a value:
+It means that if there is no goroutine consuming the values, you will get a deadlock error on sending a value:
 ```
 ch := make(chan int)
 ch <- 1 // Here we will get a deadlock error
@@ -595,7 +593,7 @@ ch <- 1 // Here we will get a deadlock error
 
 So unbuffered channels require synchronous communication!
 
-A bugger's size can be abtained using the build-in function `cap`:
+A bugger's size can be obtained using the build-in function `cap`:
 ```
 cap(ch)
 ```
@@ -617,7 +615,7 @@ for v := range ch {
 
 #### Select
 
-If a gorouting reads from more than one channel, you should use the `select` statement:
+If a goroutine reads from more than one channel, you should use the `select` statement:
 ```
 select {
     case a := <- ch1:
@@ -629,7 +627,7 @@ select {
 
 You can also process situations when no case is ready under the `default` case.
 
-If you don't use `select`, the gorouting will be blocked if there is no value avaliable in a channel.
+If you don't use `select`, the goroutine will be blocked if there is no value available in a channel.
 Then it will not be reading even from the channels that have values.
 
 #### Mutex
