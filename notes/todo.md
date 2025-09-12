@@ -12,7 +12,7 @@
 
 ### MVP
 
-[ ] Implement a proof concept application with a REST API endpoint
+[X] Implement a proof concept application with a REST API endpoint
 [ ] Implement the domain model
 [ ] Implement a response with placeholder data
 [ ] Implement a client for Wikiloc
@@ -26,6 +26,7 @@
 ### Optimization
 
 [ ] Implement search by a name instead of geocoordinates
+[ ] Add Swagger documentation
 [ ] Implement API caching
 [ ] Implement Wikiloc response caching
 [ ] Implement Google API response caching
