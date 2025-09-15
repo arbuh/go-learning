@@ -13,7 +13,7 @@
 ### MVP
 
 [X] Implement a proof concept application with a REST API endpoint
-[ ] Implement the domain model
+[X] Implement the domain model
 [ ] Implement a response with placeholder data
 [ ] Implement a client for Wikiloc
 [ ] Implement a parser for Wikiloc response

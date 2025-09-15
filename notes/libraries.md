@@ -5,6 +5,7 @@ A list of useful libraries and frameworks
 ## Utility
 
 * `fmt` - strings formatting and printing
+* `encoding/json` - JSON serialization/deserialization
 
 ## REST API
 
