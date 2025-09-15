@@ -4,9 +4,21 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+
+	"hikeandbite/services"
 )
 
-func SearchByCoordinates(w http.ResponseWriter, r *http.Request) {
+type Handler struct {
+	routeSearchService *services.RouteSearchService
+}
+
+func NewHandler(routeSearchService *services.RouteSearchService) Handler {
+	return Handler {
+		routeSearchService: routeSearchService,
+	}
+}
+
+func (h *Handler) SearchByCoordinates(w http.ResponseWriter, r *http.Request) {
 	lon := r.URL.Query().Get("lon")
 	lat := r.URL.Query().Get("lat")
 
@@ -19,6 +31,8 @@ func SearchByCoordinates(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "The query parameter 'lat' is mandatory", http.StatusBadRequest)
 		return
 	}
+
+	h.routeSearchService.SearchRoutes(lat, lon)
 
 	fmt.Fprintf(w, "Coordinates received: lat=%s, lon=%s", lat, lon)
 }
