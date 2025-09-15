@@ -6,5 +6,5 @@ type Route struct {
 	Link          string
 	Distance      float32
 	ElevationGain int
-	Cafes         []Cafe
+	Cafes         []*Cafe
 }
