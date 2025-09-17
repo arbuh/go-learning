@@ -14,7 +14,7 @@
 
 [X] Implement a proof concept application with a REST API endpoint
 [X] Implement the domain model
-[ ] Implement a response with placeholder data
+[X] Implement a response with placeholder data
 [ ] Restructure the application?
 [ ] Implement a geo coordinates entity
 [ ] Implement a client for Wikiloc

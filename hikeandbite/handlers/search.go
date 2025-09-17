@@ -2,7 +2,7 @@
 package handlers
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 
 	"hikeandbite/domain"
@@ -10,15 +10,15 @@ import (
 )
 
 type RouteResponse struct {
-	Name          string
-	Distance      float32
-	ElevationGain int
-	Cafes         []*CafeResponse
+	Name          string          `json:"name"`
+	Distance      float32         `json:"distance"`
+	ElevationGain int             `json:"elevationGain"`
+	Cafes         []*CafeResponse `json:"cafes"`
 }
 
 type CafeResponse struct {
-	Name   string
-	Rating float32
+	Name   string  `json:"name"`
+	Rating float32 `json:"rating"`
 }
 
 func toRouteResponse(route *domain.Route) RouteResponse {
@@ -73,5 +73,11 @@ func (h *Handler) SearchByCoordinates(w http.ResponseWriter, r *http.Request) {
 		responses = append(responses, &response)
 	}
 
-	fmt.Fprintf(w, "Coordinates received: lat=%s, lon=%s", lat, lon)
+	w.Header().Set("Content-Type", "application/json")
+
+	err := json.NewEncoder(w).Encode(responses)
+	if err != nil {
+		http.Error(w, "Cannot serialize routes to JSON", http.StatusInternalServerError)
+		return
+	}
 }
