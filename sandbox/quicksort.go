@@ -3,25 +3,33 @@ package main
 import "fmt"
 
 func main() {
-	arr := []int{8, 7, 6, 1, 0, 9, 2}
+	arr := []int{8, 7, 6, 1, 0, 3, 9, 2, 5, 5, 1, 4, 5}
 
-	arr = quicksort(arr)
+	quickSort(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 }
 
-func quicksort(arr []int) []int {
-	return pivot(arr, 0, len(arr)-1)
+func quickSort(arr []int, low int, high int) {
+	if low < high {
+		pivot := partition(arr, low, high)
+		quickSort(arr, low, pivot-1)
+		quickSort(arr, pivot+1, high)
+	}
 }
 
-func pivot(arr []int, i int, p int) []int {
-	for j := 0; i < len(arr); i++ {
-		if arr[i] <= arr[p] {
-			temp := arr[j]
-			arr[j] = arr[i]
-			arr[i] = temp
-			j++
+func partition(arr []int, low int, high int) int {
+	pivot := low - 1
+
+	for low <= high {
+		if arr[low] <= arr[high] {
+			pivot++
+
+			temp := arr[pivot]
+			arr[pivot] = arr[low]
+			arr[low] = temp
 		}
+		low++
 	}
 
-	return arr
+	return pivot
 }
