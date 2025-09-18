@@ -64,7 +64,8 @@ func (h *Handler) SearchByCoordinates(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	routes := h.routeSearchService.SearchRoutes(lat, lon)
+	coord := domain.GeoCoordinates{Lat: lat, Lon: lon}
+	routes := h.routeSearchService.SearchRoutes(coord)
 
 	var responses []*RouteResponse
 

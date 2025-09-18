@@ -9,7 +9,7 @@ func NewRouteSearchService() *RouteSearchService {
 	return &RouteSearchService{}
 }
 
-func (*RouteSearchService) SearchRoutes(lat string, lon string) []*domain.Route {
+func (*RouteSearchService) SearchRoutes(coord domain.GeoCoordinates) []*domain.Route {
 	cafe1 := &domain.Cafe{
 		Name:   "Restaurant Planken Wambuis",
 		Link:   "https://maps.app.goo.gl/o4CQFnUoJaUxQHTR6",
