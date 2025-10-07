@@ -118,7 +118,7 @@ Varables declared without an initial value are given zeros: `0`, `false` or `""`
 ### Type conversions
 
 
-You can use a function with a name of a type to conver a variable to this type:
+You can use a function with a name of a type to convert a variable to this type:
 ```
 var i int = 10
 var f float64 = float64(i)
@@ -133,7 +133,7 @@ const Pi = 3.12
 
 You cannot use `:=` with constants.
 
-Numeric constants are special type of numeric value. It is competable with all numeric basic types, it is high-precision, and it can be larger than 64-bits values.
+Numeric constants are special type of numeric value. It is compatible with all numeric basic types, it is high-precision, and it can be larger than 64-bits values.
 You define them without specifying a type:
 ```
 const (
@@ -291,15 +291,15 @@ var b []int = a[1:3] // i.e. including the element with the index 1 up to exclud
 
 Since slices don't contain data and refer to an underlying array, if you modify a slice you also modify the reference array.
 
-It is not necessery to initialize an array first before initializing a slice.
+It is not necessary to initialize an array first before initializing a slice.
 You can init a slice using the slice literal an it will create the underlying array out of the box:
 ```
 a := []int{1, 2, 3, 4, 5, 6}
 ```
 
-A slice had a length and a capacity. Then can be accesed via `len(a)` and `cap(a)`.
+A slice had a length and a capacity. Then can be accessed via `len(a)` and `cap(a)`.
 The length is a number of elements in the slice.
-The capacity is a number of elements in the underlaying array counting from the first element in the slice.
+The capacity is a number of elements in the underlying array counting from the first element in the slice.
 The capacity is important because it allows to control memory allocations.
 So the runtime doesn't need to reallocate memory if there is still sufficient capacity.
 
