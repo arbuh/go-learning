@@ -124,6 +124,14 @@ var i int = 10
 var f float64 = float64(i)
 ```
 
+If you need to convert `any` to a desired type, use type assertion:
+
+```
+// x any
+myType := x.(*MyType)
+myType, ok := x.(*MyType)
+```
+
 ## Constants
 
 This is how you declare a constant:
