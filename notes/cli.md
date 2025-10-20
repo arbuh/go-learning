@@ -6,7 +6,8 @@
 `go build` - compile
 `go run main.go` - compile and run without creating a native binary
 `go test` - run tests
-`go fmt` - format code
+`go fmt` - format code in the current directory
+`go fmt ./...` - format code in the current directory and all subdirectories
 `go vet` - static analysis
 `go doc` - generate documentation
 
