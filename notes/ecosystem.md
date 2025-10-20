@@ -1,5 +1,7 @@
 # Go ecosystem
 
+A collection of notes about idiomatic ways of building software in Go and other non-programming relates stuff.
+
 ## Modules
 
 A module is a collection of packages.
@@ -60,8 +62,51 @@ It is mainly for the transitive dependencies because they often don't have an ex
 Apart from the dependency pinning, `go.sum` also pins hashes for the dependencies
 to make it impossible their replacement with malicious code.
 
-N.B.: It is higly recomended NOT to exclude `go.sum` from the Git repo
+N.B.: It is highly recommended NOT to exclude `go.sum` from the Git repo
 to make sure the application is built correctly and there is not malicious dependencies!
+
+## Application layout
+
+A typical way of organizing a repository in Go is the following:
+
+```
+my-project/
+├── cmd/
+├── internal/
+└── pkg/
+```
+
+Where:
+* `cmd` - is an entry point for the application. Each subdirectory here refers to a resulting binary. The files here must be small, they only bind together the components and start the application.
+* `internal` - a private application code which contains the most of the application's logic.
+* `pkg` - an optional directory for public libraries.
+
+The standard way is using of singular names for directories, i.e. the same way as in Java or Scala ecosystems.
+
+### Examples
+
+* [A highly popular repository with the idiomatic Go project layout](https://github.com/golang-standards/project-layout/tree/master?tab=readme-ov-file)
+
+#### REST API application
+
+```
+my-project/
+├── cmd/
+│   └── server/
+│       └── main.go
+├── internal/
+    ├── handler/
+    │   ├── users.go
+    │   └── search.go
+    ├── service/
+    │   └── user_service.go
+    ├── repository/
+    │   └── user_repository.go
+    ├── router/
+    │   └── router.go
+    └── models/
+        └── user.go
+```
 
 ## Compilation
 
