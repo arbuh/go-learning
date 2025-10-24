@@ -108,6 +108,29 @@ my-project/
         └── user.go
 ```
 
+or more granular way of organizing endpoints for larger projects
+
+```
+internal/interfaces/http/
+├── dto/
+│   ├── requests/
+│   │   ├── user_requests.go      # 10+ user request DTOs
+│   │   ├── product_requests.go   # 10+ product request DTOs
+│   │   └── order_requests.go     # 10+ order request DTOs
+│   └── responses/
+│       ├── user_responses.go     # 10+ user response DTOs
+│       ├── product_responses.go  # 10+ product response DTOs
+│       └── order_responses.go    # 10+ order response DTOs
+├── handlers/
+│   ├── user_handler.go           # 15+ user endpoints
+│   ├── product_handler.go        # 20+ product endpoints
+│   └── order_handler.go          # 12+ order endpoints
+└── mappers/
+    ├── user_mapper.go            # Complex mapping logic
+    ├── product_mapper.go         # Complex mapping logic
+    └── order_mapper.go           # Complex mapping logic
+```
+
 ## Compilation
 
 Go requires no runtime separately installed on a machine, comparing to the JVM languages.
