@@ -17,4 +17,10 @@ A list of useful libraries and frameworks
 
 * `github.com/spf13/cobra` - a framework for building CLI applications
 
+## Logging and monitoring
 
+* `log` - an old simple Logging
+* `log/slog` - a modern package that supports structured logging
+
+Links:
+* [Logging in Go with Slog: The Ultimate Guide ](https://betterstack.com/community/guides/logging/logging-in-go/)
