@@ -108,7 +108,7 @@ my-project/
         └── user.go
 ```
 
-or more granular way of organizing endpoints for larger projects
+More granular way of organizing endpoints for larger projects:
 
 ```
 internal/interfaces/http/
@@ -129,6 +129,19 @@ internal/interfaces/http/
     ├── user_mapper.go            # Complex mapping logic
     ├── product_mapper.go         # Complex mapping logic
     └── order_mapper.go           # Complex mapping logic
+```
+
+A way to separate the database connection from the entity repositories:
+
+```
+backend/
+├── internal/
+│   ├── database/
+│   │   └── database.go        ← connection pool management
+    ├── repository/
+    │   └── user_repository.go
+    └── models/
+        └── user.go
 ```
 
 ## Compilation
